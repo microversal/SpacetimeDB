@@ -1,8 +1,8 @@
 use super::code_indenter::CodeIndenter;
 use super::util::{collect_case, print_auto_generated_file_comment, type_ref_name};
-use itertools::Itertools;
 use super::Lang;
 use convert_case::{Case, Casing};
+use itertools::Itertools;
 use spacetimedb_lib::sats::layout::PrimitiveType;
 use spacetimedb_schema::def::{ModuleDef, ReducerDef, ScopedTypeName, TableDef, TypeDef};
 use spacetimedb_schema::identifier::Identifier;
@@ -62,12 +62,18 @@ impl Lang for Swift {
             out.with_indent(|out| writeln!(out, "return tableCache.rows()"));
             writeln!(out, "}}");
             writeln!(out);
-            writeln!(out, "public func onInsert(_ callback: @escaping ({row_struct_name}) -> Void) {{");
-            out.with_indent(|out| writeln!(out, "// TODO: register insert callback"));
+            writeln!(
+                out,
+                "public func onInsert(_ callback: @escaping ({row_struct_name}) -> Void) {{"
+            );
+            out.with_indent(|out| writeln!(out, "tableCache.onInsert(callback)"));
             writeln!(out, "}}");
             writeln!(out);
-            writeln!(out, "public func onDelete(_ callback: @escaping ({row_struct_name}) -> Void) {{");
-            out.with_indent(|out| writeln!(out, "// TODO: register delete callback"));
+            writeln!(
+                out,
+                "public func onDelete(_ callback: @escaping ({row_struct_name}) -> Void) {{"
+            );
+            out.with_indent(|out| writeln!(out, "tableCache.onDelete(callback)"));
             writeln!(out, "}}");
         });
         writeln!(out, "}}");
@@ -128,9 +134,12 @@ impl Lang for Swift {
     fn generate_reducer(&self, module: &ModuleDef, reducer: &ReducerDef) -> String {
         let mut out = CodeIndenter::new(String::new(), INDENT);
         print_auto_generated_file_comment(&mut out);
+        writeln!(out, "import Foundation");
+        writeln!(out);
 
         let fn_name = reducer.name.deref().to_case(Case::Camel);
         let on_fn_name = format!("on{}", reducer.name.deref().to_case(Case::Pascal));
+        let reducer_name = reducer.name.deref();
 
         writeln!(out, "public extension RemoteReducers {{");
         out.with_indent(|out| {
@@ -153,13 +162,45 @@ impl Lang for Swift {
             }
             writeln!(out, ") {{");
             out.with_indent(|out| {
-                writeln!(out, "// TODO: call reducer '{fn_name}'");
+                if reducer.params_for_generate.elements.is_empty() {
+                    writeln!(
+                        out,
+                        "connection.callReducer(reducer: \"{reducer_name}\", args: Data(), flags: flags)"
+                    );
+                } else {
+                    writeln!(out, "struct Args: Codable {{");
+                    out.with_indent(|out| {
+                        for (ident, ty) in &reducer.params_for_generate.elements {
+                            let arg_name = ident.deref().to_case(Case::Camel);
+                            let ty = swift_type(module, ty);
+                            writeln!(out, "let {arg_name}: {ty}");
+                        }
+                    });
+                    writeln!(out, "}}");
+                    let mut arg_inits = String::new();
+                    for (idx, (ident, _)) in reducer.params_for_generate.elements.iter().enumerate() {
+                        if idx != 0 {
+                            arg_inits.push_str(", ");
+                        }
+                        let arg_name = ident.deref().to_case(Case::Camel);
+                        arg_inits.push_str(&format!("{arg_name}: {arg_name}"));
+                    }
+                    writeln!(out, "let args = Args({arg_inits})");
+                    writeln!(out, "let data = try! JSONEncoder().encode(args)");
+                    writeln!(
+                        out,
+                        "connection.callReducer(reducer: \"{reducer_name}\", args: data, flags: flags)"
+                    );
+                }
             });
             writeln!(out, "}}");
             writeln!(out);
             writeln!(out, "public func {on_fn_name}(callback: @escaping () -> Void) {{");
             out.with_indent(|out| {
-                writeln!(out, "// TODO: register callback for reducer '{fn_name}'");
+                writeln!(
+                    out,
+                    "connection.onReducer(reducer: \"{reducer_name}\", callback: callback)"
+                );
             });
             writeln!(out, "}}");
         });
@@ -182,7 +223,7 @@ impl Lang for Swift {
 
         writeln!(out, "public class RemoteReducers {{");
         out.with_indent(|out| {
-            writeln!(out, "private let connection: DbConnectionImpl");
+            writeln!(out, "let connection: DbConnectionImpl");
             writeln!(out, "public init(connection: DbConnectionImpl) {{");
             out.with_indent(|out| writeln!(out, "self.connection = connection"));
             writeln!(out, "}}");
@@ -192,7 +233,7 @@ impl Lang for Swift {
 
         writeln!(out, "public class RemoteTables {{");
         out.with_indent(|out| {
-            writeln!(out, "private let connection: DbConnectionImpl");
+            writeln!(out, "let connection: DbConnectionImpl");
             writeln!(out, "public init(connection: DbConnectionImpl) {{");
             out.with_indent(|out| writeln!(out, "self.connection = connection"));
             writeln!(out, "}}");
@@ -259,4 +300,3 @@ fn swift_type(module: &ModuleDef, ty: &AlgebraicTypeUse) -> String {
         _ => "TODO".into(),
     }
 }
-

@@ -1,6 +1,5 @@
 ---
 source: crates/codegen/tests/codegen.rs
-assertion_line: 34
 expression: outfiles
 ---
 "Reducers/Add.swift" = '''
@@ -9,13 +8,21 @@ expression: outfiles
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func add(name: String, age: UInt8, flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'add'
+        struct Args: Codable {
+            let name: String
+            let age: UInt8
+        }
+        let args = Args(name: name, age: age)
+        let data = try! JSONEncoder().encode(args)
+        connection.callReducer(reducer: "add", args: data, flags: flags)
     }
 
     public func onAdd(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'add'
+        connection.onReducer(reducer: "add", callback: callback)
     }
 }
 '''
@@ -25,13 +32,20 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func addPlayer(name: String, flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'addPlayer'
+        struct Args: Codable {
+            let name: String
+        }
+        let args = Args(name: name)
+        let data = try! JSONEncoder().encode(args)
+        connection.callReducer(reducer: "add_player", args: data, flags: flags)
     }
 
     public func onAddPlayer(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'addPlayer'
+        connection.onReducer(reducer: "add_player", callback: callback)
     }
 }
 '''
@@ -41,13 +55,20 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func addPrivate(name: String, flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'addPrivate'
+        struct Args: Codable {
+            let name: String
+        }
+        let args = Args(name: name)
+        let data = try! JSONEncoder().encode(args)
+        connection.callReducer(reducer: "add_private", args: data, flags: flags)
     }
 
     public func onAddPrivate(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'addPrivate'
+        connection.onReducer(reducer: "add_private", callback: callback)
     }
 }
 '''
@@ -57,13 +78,15 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func assertCallerIdentityIsModuleIdentity(flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'assertCallerIdentityIsModuleIdentity'
+        connection.callReducer(reducer: "assert_caller_identity_is_module_identity", args: Data(), flags: flags)
     }
 
     public func onAssertCallerIdentityIsModuleIdentity(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'assertCallerIdentityIsModuleIdentity'
+        connection.onReducer(reducer: "assert_caller_identity_is_module_identity", callback: callback)
     }
 }
 '''
@@ -73,13 +96,15 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func clientConnected(flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'clientConnected'
+        connection.callReducer(reducer: "client_connected", args: Data(), flags: flags)
     }
 
     public func onClientConnected(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'clientConnected'
+        connection.onReducer(reducer: "client_connected", callback: callback)
     }
 }
 '''
@@ -89,13 +114,20 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func deletePlayer(id: UInt64, flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'deletePlayer'
+        struct Args: Codable {
+            let id: UInt64
+        }
+        let args = Args(id: id)
+        let data = try! JSONEncoder().encode(args)
+        connection.callReducer(reducer: "delete_player", args: data, flags: flags)
     }
 
     public func onDeletePlayer(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'deletePlayer'
+        connection.onReducer(reducer: "delete_player", callback: callback)
     }
 }
 '''
@@ -105,13 +137,20 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func deletePlayersByName(name: String, flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'deletePlayersByName'
+        struct Args: Codable {
+            let name: String
+        }
+        let args = Args(name: name)
+        let data = try! JSONEncoder().encode(args)
+        connection.callReducer(reducer: "delete_players_by_name", args: data, flags: flags)
     }
 
     public func onDeletePlayersByName(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'deletePlayersByName'
+        connection.onReducer(reducer: "delete_players_by_name", callback: callback)
     }
 }
 '''
@@ -121,13 +160,20 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func listOverAge(age: UInt8, flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'listOverAge'
+        struct Args: Codable {
+            let age: UInt8
+        }
+        let args = Args(age: age)
+        let data = try! JSONEncoder().encode(args)
+        connection.callReducer(reducer: "list_over_age", args: data, flags: flags)
     }
 
     public func onListOverAge(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'listOverAge'
+        connection.onReducer(reducer: "list_over_age", callback: callback)
     }
 }
 '''
@@ -137,13 +183,15 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func logModuleIdentity(flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'logModuleIdentity'
+        connection.callReducer(reducer: "log_module_identity", args: Data(), flags: flags)
     }
 
     public func onLogModuleIdentity(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'logModuleIdentity'
+        connection.onReducer(reducer: "log_module_identity", callback: callback)
     }
 }
 '''
@@ -153,13 +201,15 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func queryPrivate(flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'queryPrivate'
+        connection.callReducer(reducer: "query_private", args: Data(), flags: flags)
     }
 
     public func onQueryPrivate(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'queryPrivate'
+        connection.onReducer(reducer: "query_private", callback: callback)
     }
 }
 '''
@@ -169,13 +219,20 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func repeatingTest(arg: RepeatingTestArg, flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'repeatingTest'
+        struct Args: Codable {
+            let arg: RepeatingTestArg
+        }
+        let args = Args(arg: arg)
+        let data = try! JSONEncoder().encode(args)
+        connection.callReducer(reducer: "repeating_test", args: data, flags: flags)
     }
 
     public func onRepeatingTest(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'repeatingTest'
+        connection.onReducer(reducer: "repeating_test", callback: callback)
     }
 }
 '''
@@ -185,13 +242,15 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func sayHello(flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'sayHello'
+        connection.callReducer(reducer: "say_hello", args: Data(), flags: flags)
     }
 
     public func onSayHello(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'sayHello'
+        connection.onReducer(reducer: "say_hello", callback: callback)
     }
 }
 '''
@@ -201,13 +260,23 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func test(arg: TestA, arg2: TestB, arg3: NamespaceTestC, arg4: NamespaceTestF, flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'test'
+        struct Args: Codable {
+            let arg: TestA
+            let arg2: TestB
+            let arg3: NamespaceTestC
+            let arg4: NamespaceTestF
+        }
+        let args = Args(arg: arg, arg2: arg2, arg3: arg3, arg4: arg4)
+        let data = try! JSONEncoder().encode(args)
+        connection.callReducer(reducer: "test", args: data, flags: flags)
     }
 
     public func onTest(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'test'
+        connection.onReducer(reducer: "test", callback: callback)
     }
 }
 '''
@@ -217,13 +286,15 @@ public extension RemoteReducers {
 
 VERSION_COMMENT
 
+import Foundation
+
 public extension RemoteReducers {
     public func testBtreeIndexArgs(flags: ReducerCallFlags = []) {
-        // TODO: call reducer 'testBtreeIndexArgs'
+        connection.callReducer(reducer: "test_btree_index_args", args: Data(), flags: flags)
     }
 
     public func onTestBtreeIndexArgs(callback: @escaping () -> Void) {
-        // TODO: register callback for reducer 'testBtreeIndexArgs'
+        connection.onReducer(reducer: "test_btree_index_args", callback: callback)
     }
 }
 '''
@@ -253,11 +324,11 @@ public final class HasSpecialStuffTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (HasSpecialStuffRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (HasSpecialStuffRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -288,11 +359,11 @@ public final class LoggedOutPlayerTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (LoggedOutPlayerRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (LoggedOutPlayerRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -323,11 +394,11 @@ public final class PersonTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (PersonRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (PersonRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -357,11 +428,11 @@ public final class PkMultiIdentityTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (PkMultiIdentityRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (PkMultiIdentityRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -392,11 +463,11 @@ public final class PlayerTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (PlayerRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (PlayerRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -426,11 +497,11 @@ public final class PointsTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (PointsRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (PointsRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -459,11 +530,11 @@ public final class PrivateTableTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (PrivateTableRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (PrivateTableRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -494,11 +565,11 @@ public final class RepeatingTestArgTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (RepeatingTestArgRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (RepeatingTestArgRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -529,11 +600,11 @@ public final class TestATableHandle {
     }
 
     public func onInsert(_ callback: @escaping (TestARow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (TestARow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -562,11 +633,11 @@ public final class TestDTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (TestDRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (TestDRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -596,11 +667,11 @@ public final class TestETableHandle {
     }
 
     public func onInsert(_ callback: @escaping (TestERow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (TestERow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -629,11 +700,11 @@ public final class TestFTableHandle {
     }
 
     public func onInsert(_ callback: @escaping (TestFRow) -> Void) {
-        // TODO: register insert callback
+        tableCache.onInsert(callback)
     }
 
     public func onDelete(_ callback: @escaping (TestFRow) -> Void) {
-        // TODO: register delete callback
+        tableCache.onDelete(callback)
     }
 }
 '''
@@ -826,14 +897,14 @@ public struct ReducerCallFlags: OptionSet {
 }
 
 public class RemoteReducers {
-    private let connection: DbConnectionImpl
+    let connection: DbConnectionImpl
     public init(connection: DbConnectionImpl) {
         self.connection = connection
     }
 }
 
 public class RemoteTables {
-    private let connection: DbConnectionImpl
+    let connection: DbConnectionImpl
     public init(connection: DbConnectionImpl) {
         self.connection = connection
     }
