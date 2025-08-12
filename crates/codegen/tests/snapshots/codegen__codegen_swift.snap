@@ -1,5 +1,6 @@
 ---
 source: crates/codegen/tests/codegen.rs
+assertion_line: 34
 expression: outfiles
 ---
 "Reducers/Add.swift" = '''
@@ -8,8 +9,14 @@ expression: outfiles
 
 VERSION_COMMENT
 
-public func add(name: String, age: UInt8) {
-    // TODO: call reducer 'add'
+public extension RemoteReducers {
+    public func add(name: String, age: UInt8, flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'add'
+    }
+
+    public func onAdd(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'add'
+    }
 }
 '''
 "Reducers/AddPlayer.swift" = '''
@@ -18,8 +25,14 @@ public func add(name: String, age: UInt8) {
 
 VERSION_COMMENT
 
-public func addPlayer(name: String) {
-    // TODO: call reducer 'addPlayer'
+public extension RemoteReducers {
+    public func addPlayer(name: String, flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'addPlayer'
+    }
+
+    public func onAddPlayer(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'addPlayer'
+    }
 }
 '''
 "Reducers/AddPrivate.swift" = '''
@@ -28,8 +41,14 @@ public func addPlayer(name: String) {
 
 VERSION_COMMENT
 
-public func addPrivate(name: String) {
-    // TODO: call reducer 'addPrivate'
+public extension RemoteReducers {
+    public func addPrivate(name: String, flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'addPrivate'
+    }
+
+    public func onAddPrivate(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'addPrivate'
+    }
 }
 '''
 "Reducers/AssertCallerIdentityIsModuleIdentity.swift" = '''
@@ -38,8 +57,14 @@ public func addPrivate(name: String) {
 
 VERSION_COMMENT
 
-public func assertCallerIdentityIsModuleIdentity() {
-    // TODO: call reducer 'assertCallerIdentityIsModuleIdentity'
+public extension RemoteReducers {
+    public func assertCallerIdentityIsModuleIdentity(flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'assertCallerIdentityIsModuleIdentity'
+    }
+
+    public func onAssertCallerIdentityIsModuleIdentity(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'assertCallerIdentityIsModuleIdentity'
+    }
 }
 '''
 "Reducers/ClientConnected.swift" = '''
@@ -48,8 +73,14 @@ public func assertCallerIdentityIsModuleIdentity() {
 
 VERSION_COMMENT
 
-public func clientConnected() {
-    // TODO: call reducer 'clientConnected'
+public extension RemoteReducers {
+    public func clientConnected(flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'clientConnected'
+    }
+
+    public func onClientConnected(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'clientConnected'
+    }
 }
 '''
 "Reducers/DeletePlayer.swift" = '''
@@ -58,8 +89,14 @@ public func clientConnected() {
 
 VERSION_COMMENT
 
-public func deletePlayer(id: UInt64) {
-    // TODO: call reducer 'deletePlayer'
+public extension RemoteReducers {
+    public func deletePlayer(id: UInt64, flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'deletePlayer'
+    }
+
+    public func onDeletePlayer(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'deletePlayer'
+    }
 }
 '''
 "Reducers/DeletePlayersByName.swift" = '''
@@ -68,8 +105,14 @@ public func deletePlayer(id: UInt64) {
 
 VERSION_COMMENT
 
-public func deletePlayersByName(name: String) {
-    // TODO: call reducer 'deletePlayersByName'
+public extension RemoteReducers {
+    public func deletePlayersByName(name: String, flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'deletePlayersByName'
+    }
+
+    public func onDeletePlayersByName(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'deletePlayersByName'
+    }
 }
 '''
 "Reducers/ListOverAge.swift" = '''
@@ -78,8 +121,14 @@ public func deletePlayersByName(name: String) {
 
 VERSION_COMMENT
 
-public func listOverAge(age: UInt8) {
-    // TODO: call reducer 'listOverAge'
+public extension RemoteReducers {
+    public func listOverAge(age: UInt8, flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'listOverAge'
+    }
+
+    public func onListOverAge(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'listOverAge'
+    }
 }
 '''
 "Reducers/LogModuleIdentity.swift" = '''
@@ -88,8 +137,14 @@ public func listOverAge(age: UInt8) {
 
 VERSION_COMMENT
 
-public func logModuleIdentity() {
-    // TODO: call reducer 'logModuleIdentity'
+public extension RemoteReducers {
+    public func logModuleIdentity(flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'logModuleIdentity'
+    }
+
+    public func onLogModuleIdentity(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'logModuleIdentity'
+    }
 }
 '''
 "Reducers/QueryPrivate.swift" = '''
@@ -98,8 +153,14 @@ public func logModuleIdentity() {
 
 VERSION_COMMENT
 
-public func queryPrivate() {
-    // TODO: call reducer 'queryPrivate'
+public extension RemoteReducers {
+    public func queryPrivate(flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'queryPrivate'
+    }
+
+    public func onQueryPrivate(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'queryPrivate'
+    }
 }
 '''
 "Reducers/RepeatingTest.swift" = '''
@@ -108,8 +169,14 @@ public func queryPrivate() {
 
 VERSION_COMMENT
 
-public func repeatingTest(arg: RepeatingTestArg) {
-    // TODO: call reducer 'repeatingTest'
+public extension RemoteReducers {
+    public func repeatingTest(arg: RepeatingTestArg, flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'repeatingTest'
+    }
+
+    public func onRepeatingTest(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'repeatingTest'
+    }
 }
 '''
 "Reducers/SayHello.swift" = '''
@@ -118,8 +185,14 @@ public func repeatingTest(arg: RepeatingTestArg) {
 
 VERSION_COMMENT
 
-public func sayHello() {
-    // TODO: call reducer 'sayHello'
+public extension RemoteReducers {
+    public func sayHello(flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'sayHello'
+    }
+
+    public func onSayHello(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'sayHello'
+    }
 }
 '''
 "Reducers/Test.swift" = '''
@@ -128,8 +201,14 @@ public func sayHello() {
 
 VERSION_COMMENT
 
-public func test(arg: TestA, arg2: TestB, arg3: NamespaceTestC, arg4: NamespaceTestF) {
-    // TODO: call reducer 'test'
+public extension RemoteReducers {
+    public func test(arg: TestA, arg2: TestB, arg3: NamespaceTestC, arg4: NamespaceTestF, flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'test'
+    }
+
+    public func onTest(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'test'
+    }
 }
 '''
 "Reducers/TestBtreeIndexArgs.swift" = '''
@@ -138,8 +217,14 @@ public func test(arg: TestA, arg2: TestB, arg3: NamespaceTestC, arg4: NamespaceT
 
 VERSION_COMMENT
 
-public func testBtreeIndexArgs() {
-    // TODO: call reducer 'testBtreeIndexArgs'
+public extension RemoteReducers {
+    public func testBtreeIndexArgs(flags: ReducerCallFlags = []) {
+        // TODO: call reducer 'testBtreeIndexArgs'
+    }
+
+    public func onTestBtreeIndexArgs(callback: @escaping () -> Void) {
+        // TODO: register callback for reducer 'testBtreeIndexArgs'
+    }
 }
 '''
 "Tables/HasSpecialStuff.swift" = '''
@@ -148,9 +233,32 @@ public func testBtreeIndexArgs() {
 
 VERSION_COMMENT
 
-public struct HasSpecialStuffRow {
+public struct HasSpecialStuffRow: Codable {
     public var identity: Identity
     public var connectionId: ConnectionId
+}
+
+public final class HasSpecialStuffTableHandle {
+    private let tableCache: TableCache<HasSpecialStuffRow>
+    public init(tableCache: TableCache<HasSpecialStuffRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [HasSpecialStuffRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (HasSpecialStuffRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (HasSpecialStuffRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/LoggedOutPlayer.swift" = '''
@@ -159,10 +267,33 @@ public struct HasSpecialStuffRow {
 
 VERSION_COMMENT
 
-public struct LoggedOutPlayerRow {
+public struct LoggedOutPlayerRow: Codable {
     public var identity: Identity
     public var playerId: UInt64
     public var name: String
+}
+
+public final class LoggedOutPlayerTableHandle {
+    private let tableCache: TableCache<LoggedOutPlayerRow>
+    public init(tableCache: TableCache<LoggedOutPlayerRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [LoggedOutPlayerRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (LoggedOutPlayerRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (LoggedOutPlayerRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/Person.swift" = '''
@@ -171,10 +302,33 @@ public struct LoggedOutPlayerRow {
 
 VERSION_COMMENT
 
-public struct PersonRow {
+public struct PersonRow: Codable {
     public var id: UInt32
     public var name: String
     public var age: UInt8
+}
+
+public final class PersonTableHandle {
+    private let tableCache: TableCache<PersonRow>
+    public init(tableCache: TableCache<PersonRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [PersonRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (PersonRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (PersonRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/PkMultiIdentity.swift" = '''
@@ -183,9 +337,32 @@ public struct PersonRow {
 
 VERSION_COMMENT
 
-public struct PkMultiIdentityRow {
+public struct PkMultiIdentityRow: Codable {
     public var id: UInt32
     public var other: UInt32
+}
+
+public final class PkMultiIdentityTableHandle {
+    private let tableCache: TableCache<PkMultiIdentityRow>
+    public init(tableCache: TableCache<PkMultiIdentityRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [PkMultiIdentityRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (PkMultiIdentityRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (PkMultiIdentityRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/Player.swift" = '''
@@ -194,10 +371,33 @@ public struct PkMultiIdentityRow {
 
 VERSION_COMMENT
 
-public struct PlayerRow {
+public struct PlayerRow: Codable {
     public var identity: Identity
     public var playerId: UInt64
     public var name: String
+}
+
+public final class PlayerTableHandle {
+    private let tableCache: TableCache<PlayerRow>
+    public init(tableCache: TableCache<PlayerRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [PlayerRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (PlayerRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (PlayerRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/Points.swift" = '''
@@ -206,9 +406,32 @@ public struct PlayerRow {
 
 VERSION_COMMENT
 
-public struct PointsRow {
+public struct PointsRow: Codable {
     public var x: Int64
     public var y: Int64
+}
+
+public final class PointsTableHandle {
+    private let tableCache: TableCache<PointsRow>
+    public init(tableCache: TableCache<PointsRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [PointsRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (PointsRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (PointsRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/PrivateTable.swift" = '''
@@ -217,8 +440,31 @@ public struct PointsRow {
 
 VERSION_COMMENT
 
-public struct PrivateTableRow {
+public struct PrivateTableRow: Codable {
     public var name: String
+}
+
+public final class PrivateTableTableHandle {
+    private let tableCache: TableCache<PrivateTableRow>
+    public init(tableCache: TableCache<PrivateTableRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [PrivateTableRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (PrivateTableRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (PrivateTableRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/RepeatingTestArg.swift" = '''
@@ -227,10 +473,33 @@ public struct PrivateTableRow {
 
 VERSION_COMMENT
 
-public struct RepeatingTestArgRow {
+public struct RepeatingTestArgRow: Codable {
     public var scheduledId: UInt64
     public var scheduledAt: TODO
     public var prevTime: TODO
+}
+
+public final class RepeatingTestArgTableHandle {
+    private let tableCache: TableCache<RepeatingTestArgRow>
+    public init(tableCache: TableCache<RepeatingTestArgRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [RepeatingTestArgRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (RepeatingTestArgRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (RepeatingTestArgRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/TestA.swift" = '''
@@ -239,10 +508,33 @@ public struct RepeatingTestArgRow {
 
 VERSION_COMMENT
 
-public struct TestARow {
+public struct TestARow: Codable {
     public var x: UInt32
     public var y: UInt32
     public var z: String
+}
+
+public final class TestATableHandle {
+    private let tableCache: TableCache<TestARow>
+    public init(tableCache: TableCache<TestARow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [TestARow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (TestARow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (TestARow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/TestD.swift" = '''
@@ -251,8 +543,31 @@ public struct TestARow {
 
 VERSION_COMMENT
 
-public struct TestDRow {
+public struct TestDRow: Codable {
     public var testC: NamespaceTestC?
+}
+
+public final class TestDTableHandle {
+    private let tableCache: TableCache<TestDRow>
+    public init(tableCache: TableCache<TestDRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [TestDRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (TestDRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (TestDRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/TestE.swift" = '''
@@ -261,9 +576,32 @@ public struct TestDRow {
 
 VERSION_COMMENT
 
-public struct TestERow {
+public struct TestERow: Codable {
     public var id: UInt64
     public var name: String
+}
+
+public final class TestETableHandle {
+    private let tableCache: TableCache<TestERow>
+    public init(tableCache: TableCache<TestERow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [TestERow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (TestERow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (TestERow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Tables/TestF.swift" = '''
@@ -272,8 +610,31 @@ public struct TestERow {
 
 VERSION_COMMENT
 
-public struct TestFRow {
+public struct TestFRow: Codable {
     public var field: Foobar
+}
+
+public final class TestFTableHandle {
+    private let tableCache: TableCache<TestFRow>
+    public init(tableCache: TableCache<TestFRow>) {
+        self.tableCache = tableCache
+    }
+
+    public func count() -> Int {
+        return tableCache.count()
+    }
+
+    public func rows() -> [TestFRow] {
+        return tableCache.rows()
+    }
+
+    public func onInsert(_ callback: @escaping (TestFRow) -> Void) {
+        // TODO: register insert callback
+    }
+
+    public func onDelete(_ callback: @escaping (TestFRow) -> Void) {
+        // TODO: register delete callback
+    }
 }
 '''
 "Types/Baz.swift" = '''
@@ -282,7 +643,7 @@ public struct TestFRow {
 
 VERSION_COMMENT
 
-public struct Baz {
+public struct Baz: Codable {
     public var field: String
 }
 '''
@@ -292,7 +653,7 @@ public struct Baz {
 
 VERSION_COMMENT
 
-public enum Foobar {
+public enum Foobar: Codable {
     case baz(Baz)
     case bar
     case har(UInt32)
@@ -304,7 +665,7 @@ public enum Foobar {
 
 VERSION_COMMENT
 
-public struct HasSpecialStuff {
+public struct HasSpecialStuff: Codable {
     public var identity: Identity
     public var connectionId: ConnectionId
 }
@@ -315,7 +676,7 @@ public struct HasSpecialStuff {
 
 VERSION_COMMENT
 
-public enum NamespaceTestC: Int32 {
+public enum NamespaceTestC: Int32, Codable {
     case foo = 0
     case bar = 1
 }
@@ -326,7 +687,7 @@ public enum NamespaceTestC: Int32 {
 
 VERSION_COMMENT
 
-public enum NamespaceTestF {
+public enum NamespaceTestF: Codable {
     case foo
     case bar
     case baz(String)
@@ -338,7 +699,7 @@ public enum NamespaceTestF {
 
 VERSION_COMMENT
 
-public struct Person {
+public struct Person: Codable {
     public var id: UInt32
     public var name: String
     public var age: UInt8
@@ -350,7 +711,7 @@ public struct Person {
 
 VERSION_COMMENT
 
-public struct PkMultiIdentity {
+public struct PkMultiIdentity: Codable {
     public var id: UInt32
     public var other: UInt32
 }
@@ -361,7 +722,7 @@ public struct PkMultiIdentity {
 
 VERSION_COMMENT
 
-public struct Player {
+public struct Player: Codable {
     public var identity: Identity
     public var playerId: UInt64
     public var name: String
@@ -373,7 +734,7 @@ public struct Player {
 
 VERSION_COMMENT
 
-public struct Point {
+public struct Point: Codable {
     public var x: Int64
     public var y: Int64
 }
@@ -384,7 +745,7 @@ public struct Point {
 
 VERSION_COMMENT
 
-public struct PrivateTable {
+public struct PrivateTable: Codable {
     public var name: String
 }
 '''
@@ -394,7 +755,7 @@ public struct PrivateTable {
 
 VERSION_COMMENT
 
-public struct RepeatingTestArg {
+public struct RepeatingTestArg: Codable {
     public var scheduledId: UInt64
     public var scheduledAt: TODO
     public var prevTime: TODO
@@ -406,7 +767,7 @@ public struct RepeatingTestArg {
 
 VERSION_COMMENT
 
-public struct TestA {
+public struct TestA: Codable {
     public var x: UInt32
     public var y: UInt32
     public var z: String
@@ -418,7 +779,7 @@ public struct TestA {
 
 VERSION_COMMENT
 
-public struct TestB {
+public struct TestB: Codable {
     public var foo: String
 }
 '''
@@ -428,7 +789,7 @@ public struct TestB {
 
 VERSION_COMMENT
 
-public struct TestD {
+public struct TestD: Codable {
     public var testC: NamespaceTestC?
 }
 '''
@@ -438,7 +799,7 @@ public struct TestD {
 
 VERSION_COMMENT
 
-public struct TestE {
+public struct TestE: Codable {
     public var id: UInt64
     public var name: String
 }
@@ -449,7 +810,56 @@ public struct TestE {
 
 VERSION_COMMENT
 
-public struct TestFoobar {
+public struct TestFoobar: Codable {
     public var field: Foobar
+}
+'''
+"index.swift" = '''
+// THIS FILE IS AUTOMATICALLY GENERATED BY SPACETIMEDB. EDITS TO THIS FILE
+// WILL NOT BE SAVED. MODIFY TABLES IN YOUR MODULE SOURCE CODE INSTEAD.
+
+VERSION_COMMENT
+
+public struct ReducerCallFlags: OptionSet {
+    public let rawValue: Int
+    public init(rawValue: Int) { self.rawValue = rawValue }
+}
+
+public class RemoteReducers {
+    private let connection: DbConnectionImpl
+    public init(connection: DbConnectionImpl) {
+        self.connection = connection
+    }
+}
+
+public class RemoteTables {
+    private let connection: DbConnectionImpl
+    public init(connection: DbConnectionImpl) {
+        self.connection = connection
+    }
+
+    public lazy var hasSpecialStuff: HasSpecialStuffTableHandle = HasSpecialStuffTableHandle(tableCache: TableCache<HasSpecialStuffRow>())
+    public lazy var loggedOutPlayer: LoggedOutPlayerTableHandle = LoggedOutPlayerTableHandle(tableCache: TableCache<LoggedOutPlayerRow>())
+    public lazy var person: PersonTableHandle = PersonTableHandle(tableCache: TableCache<PersonRow>())
+    public lazy var pkMultiIdentity: PkMultiIdentityTableHandle = PkMultiIdentityTableHandle(tableCache: TableCache<PkMultiIdentityRow>())
+    public lazy var player: PlayerTableHandle = PlayerTableHandle(tableCache: TableCache<PlayerRow>())
+    public lazy var points: PointsTableHandle = PointsTableHandle(tableCache: TableCache<PointsRow>())
+    public lazy var privateTable: PrivateTableTableHandle = PrivateTableTableHandle(tableCache: TableCache<PrivateTableRow>())
+    public lazy var repeatingTestArg: RepeatingTestArgTableHandle = RepeatingTestArgTableHandle(tableCache: TableCache<RepeatingTestArgRow>())
+    public lazy var testA: TestATableHandle = TestATableHandle(tableCache: TableCache<TestARow>())
+    public lazy var testD: TestDTableHandle = TestDTableHandle(tableCache: TableCache<TestDRow>())
+    public lazy var testE: TestETableHandle = TestETableHandle(tableCache: TableCache<TestERow>())
+    public lazy var testF: TestFTableHandle = TestFTableHandle(tableCache: TableCache<TestFRow>())
+}
+
+public final class ModuleDb {
+    public let connection: DbConnectionImpl
+    public let db: RemoteTables
+    public let reducers: RemoteReducers
+    public init(connection: DbConnectionImpl) {
+        self.connection = connection
+        self.db = RemoteTables(connection: connection)
+        self.reducers = RemoteReducers(connection: connection)
+    }
 }
 '''
