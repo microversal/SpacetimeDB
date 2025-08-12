@@ -283,7 +283,7 @@ Run `spacetime help publish` for more detailed information.
   Default value: `SpacetimeDB.Types`
 * `-l`, `--lang <LANG>` — The language to generate
 
-  Possible values: `csharp`, `typescript`, `rust`
+  Possible values: `csharp`, `typescript`, `rust`, `swift`
 
 * `--build-options <BUILD_OPTIONS>` — Options to pass to the build command, for example --build-options='--lint-dir='
 

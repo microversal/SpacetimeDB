@@ -5,7 +5,7 @@ use clap::parser::ValueSource;
 use clap::Arg;
 use clap::ArgAction::Set;
 use fs_err as fs;
-use spacetimedb_codegen::{generate, Csharp, Lang, Rust, TypeScript, AUTO_GENERATED_PREFIX};
+use spacetimedb_codegen::{generate, Csharp, Lang, Rust, Swift, TypeScript, AUTO_GENERATED_PREFIX};
 use spacetimedb_lib::de::serde::DeserializeWrapper;
 use spacetimedb_lib::{sats, RawModuleDef};
 use spacetimedb_schema;
@@ -143,6 +143,7 @@ pub async fn exec_ex(
         }
         Language::Rust => &Rust,
         Language::TypeScript => &TypeScript,
+        Language::Swift => &Swift,
     };
 
     for (fname, code) in generate(&module, gen_lang) {
@@ -213,17 +214,19 @@ pub enum Language {
     Csharp,
     TypeScript,
     Rust,
+    Swift,
 }
 
 impl clap::ValueEnum for Language {
     fn value_variants<'a>() -> &'a [Self] {
-        &[Self::Csharp, Self::TypeScript, Self::Rust]
+        &[Self::Csharp, Self::TypeScript, Self::Rust, Self::Swift]
     }
     fn to_possible_value(&self) -> Option<PossibleValue> {
         Some(match self {
             Self::Csharp => clap::builder::PossibleValue::new("csharp").aliases(["c#", "cs"]),
             Self::TypeScript => clap::builder::PossibleValue::new("typescript").aliases(["ts", "TS"]),
             Self::Rust => clap::builder::PossibleValue::new("rust").aliases(["rs", "RS"]),
+            Self::Swift => clap::builder::PossibleValue::new("swift"),
         })
     }
 }
@@ -234,6 +237,9 @@ impl Language {
             Language::Rust => rustfmt(generated_files)?,
             Language::Csharp => dotnet_format(generated_files)?,
             Language::TypeScript => {
+                // TODO: implement formatting.
+            }
+            Language::Swift => {
                 // TODO: implement formatting.
             }
         }
