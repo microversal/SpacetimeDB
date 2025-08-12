@@ -1,5 +1,6 @@
 use super::code_indenter::CodeIndenter;
 use super::util::{collect_case, print_auto_generated_file_comment, type_ref_name};
+use itertools::Itertools;
 use super::Lang;
 use convert_case::{Case, Casing};
 use spacetimedb_lib::sats::layout::PrimitiveType;
@@ -28,8 +29,9 @@ impl Lang for Swift {
         let mut out = CodeIndenter::new(String::new(), INDENT);
         print_auto_generated_file_comment(&mut out);
 
-        let table_name = tbl.name.deref().to_case(Case::Pascal) + "Row";
-        writeln!(out, "public struct {table_name} {{");
+        let table_name_pascal = tbl.name.deref().to_case(Case::Pascal);
+        let row_struct_name = format!("{table_name_pascal}Row");
+        writeln!(out, "public struct {row_struct_name}: Codable {{");
         out.with_indent(|out| {
             let product = module.typespace_for_generate()[tbl.product_type_ref]
                 .as_product()
@@ -39,6 +41,34 @@ impl Lang for Swift {
                 let ty = swift_type(module, ty);
                 writeln!(out, "public var {field_name}: {ty}");
             }
+        });
+        writeln!(out, "}}");
+
+        writeln!(out);
+
+        let handle_name = format!("{table_name_pascal}TableHandle");
+        writeln!(out, "public final class {handle_name} {{");
+        out.with_indent(|out| {
+            writeln!(out, "private let tableCache: TableCache<{row_struct_name}>");
+            writeln!(out, "public init(tableCache: TableCache<{row_struct_name}>) {{");
+            out.with_indent(|out| writeln!(out, "self.tableCache = tableCache"));
+            writeln!(out, "}}");
+            writeln!(out);
+            writeln!(out, "public func count() -> Int {{");
+            out.with_indent(|out| writeln!(out, "return tableCache.count()"));
+            writeln!(out, "}}");
+            writeln!(out);
+            writeln!(out, "public func rows() -> [{row_struct_name}] {{");
+            out.with_indent(|out| writeln!(out, "return tableCache.rows()"));
+            writeln!(out, "}}");
+            writeln!(out);
+            writeln!(out, "public func onInsert(_ callback: @escaping ({row_struct_name}) -> Void) {{");
+            out.with_indent(|out| writeln!(out, "// TODO: register insert callback"));
+            writeln!(out, "}}");
+            writeln!(out);
+            writeln!(out, "public func onDelete(_ callback: @escaping ({row_struct_name}) -> Void) {{");
+            out.with_indent(|out| writeln!(out, "// TODO: register delete callback"));
+            writeln!(out, "}}");
         });
         writeln!(out, "}}");
 
@@ -52,7 +82,7 @@ impl Lang for Swift {
         let type_name = collect_case(Case::Pascal, typ.name.name_segments());
         match &module.typespace_for_generate()[typ.ty] {
             AlgebraicTypeDef::Product(prod) => {
-                writeln!(out, "public struct {type_name} {{");
+                writeln!(out, "public struct {type_name}: Codable {{");
                 out.with_indent(|out| {
                     for (ident, ty) in &prod.elements {
                         let field_name = ident.deref().to_case(Case::Camel);
@@ -63,7 +93,7 @@ impl Lang for Swift {
                 writeln!(out, "}}");
             }
             AlgebraicTypeDef::Sum(sum) => {
-                writeln!(out, "public enum {type_name} {{");
+                writeln!(out, "public enum {type_name}: Codable {{");
                 out.with_indent(|out| {
                     for (ident, ty) in &sum.variants {
                         let case_name = ident.deref().to_case(Case::Camel);
@@ -81,7 +111,7 @@ impl Lang for Swift {
                 writeln!(out, "}}");
             }
             AlgebraicTypeDef::PlainEnum(e) => {
-                writeln!(out, "public enum {type_name}: Int32 {{");
+                writeln!(out, "public enum {type_name}: Int32, Codable {{");
                 out.with_indent(|out| {
                     for (idx, ident) in e.variants.iter().enumerate() {
                         let case_name = ident.deref().to_case(Case::Camel);
@@ -100,30 +130,100 @@ impl Lang for Swift {
         print_auto_generated_file_comment(&mut out);
 
         let fn_name = reducer.name.deref().to_case(Case::Camel);
-        write!(out, "public func {fn_name}(");
-        {
-            let mut first = true;
-            for (ident, ty) in &reducer.params_for_generate.elements {
-                if !first {
+        let on_fn_name = format!("on{}", reducer.name.deref().to_case(Case::Pascal));
+
+        writeln!(out, "public extension RemoteReducers {{");
+        out.with_indent(|out| {
+            write!(out, "public func {fn_name}(");
+            {
+                let mut first = true;
+                for (ident, ty) in &reducer.params_for_generate.elements {
+                    if !first {
+                        write!(out, ", ");
+                    }
+                    first = false;
+                    let arg_name = ident.deref().to_case(Case::Camel);
+                    let ty = swift_type(module, ty);
+                    write!(out, "{arg_name}: {ty}");
+                }
+                if !reducer.params_for_generate.elements.is_empty() {
                     write!(out, ", ");
                 }
-                first = false;
-                let arg_name = ident.deref().to_case(Case::Camel);
-                let ty = swift_type(module, ty);
-                write!(out, "{arg_name}: {ty}");
+                write!(out, "flags: ReducerCallFlags = []");
             }
-        }
-        writeln!(out, ") {{");
-        out.with_indent(|out| {
-            writeln!(out, "// TODO: call reducer '{fn_name}'");
+            writeln!(out, ") {{");
+            out.with_indent(|out| {
+                writeln!(out, "// TODO: call reducer '{fn_name}'");
+            });
+            writeln!(out, "}}");
+            writeln!(out);
+            writeln!(out, "public func {on_fn_name}(callback: @escaping () -> Void) {{");
+            out.with_indent(|out| {
+                writeln!(out, "// TODO: register callback for reducer '{fn_name}'");
+            });
+            writeln!(out, "}}");
         });
         writeln!(out, "}}");
 
         out.into_inner()
     }
 
-    fn generate_globals(&self, _module: &ModuleDef) -> Vec<(String, String)> {
-        Vec::new()
+    fn generate_globals(&self, module: &ModuleDef) -> Vec<(String, String)> {
+        let mut out = CodeIndenter::new(String::new(), INDENT);
+        print_auto_generated_file_comment(&mut out);
+
+        writeln!(out, "public struct ReducerCallFlags: OptionSet {{");
+        out.with_indent(|out| {
+            writeln!(out, "public let rawValue: Int");
+            writeln!(out, "public init(rawValue: Int) {{ self.rawValue = rawValue }}");
+        });
+        writeln!(out, "}}");
+        writeln!(out);
+
+        writeln!(out, "public class RemoteReducers {{");
+        out.with_indent(|out| {
+            writeln!(out, "private let connection: DbConnectionImpl");
+            writeln!(out, "public init(connection: DbConnectionImpl) {{");
+            out.with_indent(|out| writeln!(out, "self.connection = connection"));
+            writeln!(out, "}}");
+        });
+        writeln!(out, "}}");
+        writeln!(out);
+
+        writeln!(out, "public class RemoteTables {{");
+        out.with_indent(|out| {
+            writeln!(out, "private let connection: DbConnectionImpl");
+            writeln!(out, "public init(connection: DbConnectionImpl) {{");
+            out.with_indent(|out| writeln!(out, "self.connection = connection"));
+            writeln!(out, "}}");
+            writeln!(out);
+            for tbl in module.tables().sorted_by_key(|tbl| &tbl.name) {
+                let property_name = tbl.name.deref().to_case(Case::Camel);
+                let table_name_pascal = tbl.name.deref().to_case(Case::Pascal);
+                let handle_name = format!("{table_name_pascal}TableHandle");
+                let row_struct_name = format!("{table_name_pascal}Row");
+                writeln!(out, "public lazy var {property_name}: {handle_name} = {handle_name}(tableCache: TableCache<{row_struct_name}>())");
+            }
+        });
+        writeln!(out, "}}");
+        writeln!(out);
+
+        writeln!(out, "public final class ModuleDb {{");
+        out.with_indent(|out| {
+            writeln!(out, "public let connection: DbConnectionImpl");
+            writeln!(out, "public let db: RemoteTables");
+            writeln!(out, "public let reducers: RemoteReducers");
+            writeln!(out, "public init(connection: DbConnectionImpl) {{");
+            out.with_indent(|out| {
+                writeln!(out, "self.connection = connection");
+                writeln!(out, "self.db = RemoteTables(connection: connection)");
+                writeln!(out, "self.reducers = RemoteReducers(connection: connection)");
+            });
+            writeln!(out, "}}");
+        });
+        writeln!(out, "}}");
+
+        vec![("index.swift".to_string(), out.into_inner())]
     }
 }
 
@@ -159,3 +259,4 @@ fn swift_type(module: &ModuleDef, ty: &AlgebraicTypeUse) -> String {
         _ => "TODO".into(),
     }
 }
+
